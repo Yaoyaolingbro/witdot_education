@@ -14,7 +14,8 @@
       "Bash(curl:*)",
       "Bash(node -e:*)",
       "Bash(lsof:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

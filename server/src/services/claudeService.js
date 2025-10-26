@@ -163,6 +163,38 @@ ${courseContent}
   }
 
   /**
+   * 文本生成 AI 助手
+   * @param {string} prompt - 用户提示词
+   * @param {string} gradeLevel - 年级（用于调整语言难度）
+   */
+  async generateText(prompt, gradeLevel = '4-6') {
+    const systemPrompt = `你是一个专门为小学生设计的 AI 文本生成助手。你的任务是根据用户的提示词，生成适合小学生理解和学习的文本内容。
+
+特点：
+1. 语言简单生动，符合${gradeLevel === '1-3' ? '小学1-3年级' : gradeLevel === '4-6' ? '小学4-6年级' : '初中'}学生的认知水平
+2. 内容积极向上，富有教育意义
+3. 用词准确，避免使用复杂的专业术语
+4. 内容有趣生动，能够吸引学生注意力
+
+请直接生成内容，不要添加额外的解释。`;
+
+    const messages = [
+      {
+        role: 'user',
+        content: prompt
+      }
+    ];
+
+    const response = await this.callClaudeAPI(
+      messages,
+      systemPrompt,
+      CLAUDE_CONFIG.maxTokens.general
+    );
+
+    return response;
+  }
+
+  /**
    * 画布编程 AI 助手
    * @param {string} question - 编程相关问题
    * @param {Object} context - 上下文（当前积木、代码等）

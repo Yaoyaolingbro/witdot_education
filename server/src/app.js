@@ -25,8 +25,9 @@ const corsOptions = {
 
 // 中间件
 app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// 增加请求体大小限制以支持图片上传（base64）
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // 静态文件服务 - 提供课程资源（PPT、视频等）
 app.use('/courses', express.static(path.join(__dirname, '../public/courses')));
@@ -52,7 +53,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/courses', require('./routes/courses'));
 app.use('/api/ai', require('./routes/ai'));  // AI 助教路由
 app.use('/api/records', require('./routes/records'));  // 学习记录路由
-// app.use('/api/projects', require('./routes/projects'));
+app.use('/api/projects', require('./routes/projects'));  // 项目管理路由
 
 // 错误处理中间件
 app.use((err, req, res, next) => {

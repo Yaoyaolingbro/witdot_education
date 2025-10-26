@@ -5,6 +5,8 @@ import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import LessonDetail from './pages/LessonDetail';
 import CanvasCoding from './pages/CanvasCoding';
+import ImageRecognition from './pages/ImageRecognition';
+import MyProjects from './pages/MyProjects';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
       {
         path: 'canvas',
         element: <CanvasCoding />,
+      },
+      {
+        path: 'canvas/image-recognition',
+        element: <ImageRecognition />,
+      },
+      {
+        path: 'my-projects',
+        element: <MyProjects />,
       },
       {
         path: 'login',

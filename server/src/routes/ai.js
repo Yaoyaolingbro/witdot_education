@@ -113,9 +113,37 @@ router.post('/image-recognition', auth, async (req, res) => {
       encouragement: claudeService.getRandomEncouragement()
     });
   } catch (error) {
-    console.error('Image recognition error:', error);
+    console.error('Image recognition error:', error.message);
     res.status(500).json({
       error: error.message || '图像识别失败，请稍后再试'
+    });
+  }
+});
+
+/**
+ * POST /api/ai/text-generate
+ * 文本生成
+ */
+router.post('/text-generate', auth, async (req, res) => {
+  try {
+    const { prompt } = req.body;
+
+    if (!prompt || !prompt.trim()) {
+      return res.status(400).json({
+        error: '请输入提示词'
+      });
+    }
+
+    const result = await claudeService.generateText(prompt, req.user.grade || '4-6');
+
+    res.json({
+      result,
+      encouragement: claudeService.getRandomEncouragement()
+    });
+  } catch (error) {
+    console.error('Text generation error:', error);
+    res.status(500).json({
+      error: error.message || '文本生成失败，请稍后再试'
     });
   }
 });
