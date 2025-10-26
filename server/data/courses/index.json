@@ -1,0 +1,9 @@
+{
+  "courses": [
+    {
+      "configFile": "ai-literacy-primary-high.json",
+      "enabled": true,
+      "lastUpdated": "2025-10-26"
+    }
+  ]
+}

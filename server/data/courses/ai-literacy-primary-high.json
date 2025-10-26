@@ -1,0 +1,110 @@
+{
+  "courseId": "ai-literacy-primary-high",
+  "title": "AI 通识教育课程（小学高年级-初中）",
+  "description": "通过生动有趣的案例和实践活动，让学生理解 AI 的基本原理，包括图像识别、语音识别、机器人控制等核心概念，培养面向未来的 AI 素养。",
+  "gradeLevel": "4-6",
+  "category": "ai_literacy",
+  "coverImage": "/courses/ai-literacy-primary-high/cover.jpg",
+  "duration": 360,
+  "difficulty": "beginner",
+  "objectives": [
+    "理解人工智能的基本概念和应用场景",
+    "掌握图像识别的基本原理和实践方法",
+    "了解语音识别技术的工作机制",
+    "学习机器人感知和控制的基础知识",
+    "培养对 AI 技术的正确认知和伦理意识"
+  ],
+  "lessons": [
+    {
+      "lessonId": "lesson-01",
+      "title": "创造你的机器人伙伴",
+      "order": 1,
+      "description": "认识人工智能，了解机器人的基本概念，探索 AI 在生活中的应用。",
+      "content": "本节课将带领同学们进入 AI 的奇妙世界，通过实例认识身边的智能机器人，理解 AI 如何成为我们的好伙伴。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-01.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/01-创造你的机器人伙伴.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-02",
+      "title": "AI 悄悄陪伴的一天",
+      "order": 2,
+      "description": "发现日常生活中无处不在的 AI 应用，从早晨到晚上的 AI 陪伴。",
+      "content": "跟随小明的一天，发现智能闹钟、语音助手、推荐系统等 AI 技术如何让生活更便捷。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-02.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/02-AI悄悄陪伴的一天.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-03",
+      "title": "电脑如何一眼认出猫",
+      "order": 3,
+      "description": "揭秘图像识别的工作原理，理解计算机如何看懂图片。",
+      "content": "通过特征提取、模式匹配等概念，了解计算机视觉的基础原理，探索图像识别背后的秘密。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-03.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/03-电脑如何一眼认出猫.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-04",
+      "title": "动手教 AI 看图识物",
+      "order": 4,
+      "description": "实践课程：通过简单的工具训练自己的图像识别模型。",
+      "content": "使用可视化工具收集图片、标注数据、训练模型，亲身体验如何教会 AI 识别不同的物体。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-04.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/04-动手教AI看图识物.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-05",
+      "title": "语音识别揭秘",
+      "order": 5,
+      "description": "探索语音识别技术，了解计算机如何听懂人类语言。",
+      "content": "从声波到文字，理解语音识别的工作流程，包括声音采集、特征提取、语言模型等关键环节。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-05.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/05-语音识别揭秘.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-06",
+      "title": "开口即魔法：语音 AI 实战",
+      "order": 6,
+      "description": "实践课程：制作简单的语音控制应用。",
+      "content": "动手创建语音指令识别程序，体验语音交互的乐趣，了解语音助手的工作原理。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-06.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/06-开口即魔法：语音AI实战.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-07",
+      "title": "AI 机器人全能感官秀",
+      "order": 7,
+      "description": "了解机器人的多种传感器，探索机器人如何感知世界。",
+      "content": "认识视觉传感器、听觉传感器、触觉传感器等，理解多模态感知如何让机器人更智能。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-07.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/07-AI机器人全能感官秀.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-08",
+      "title": "给小车装上 AI 大脑",
+      "order": 8,
+      "description": "实践课程：编程控制智能小车，实现自主导航。",
+      "content": "结合传感器数据和控制算法，让小车能够避障、循迹、识别目标，体验 AI 控制的魅力。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-08.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/08-给小车装上AI大脑.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-10",
+      "title": "AI 未来号：梦想与底线",
+      "order": 9,
+      "description": "展望 AI 的未来发展，探讨 AI 伦理和责任。",
+      "content": "思考 AI 带来的机遇和挑战，了解 AI 伦理原则，培养负责任的 AI 使用态度。",
+      "videoUrl": "/courses/ai-literacy-primary-high/videos/lesson-10.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-high/ppts/10-AI未来号：梦想与底线.pptx",
+      "duration": 40
+    }
+  ],
+  "isPublished": true
+}
