@@ -1,0 +1,121 @@
+{
+  "courseId": "ai-literacy-middle-school",
+  "title": "AI 通识教育课程（初中）",
+  "description": "面向初中生的深度AI课程，系统学习人工智能的核心技术原理、算法基础，并通过项目实践掌握AI应用开发，为未来科技创新打下坚实基础。",
+  "gradeLevel": "7-9",
+  "category": "ai_literacy",
+  "coverImage": "/courses/ai-literacy-middle-school/cover.jpg",
+  "duration": 480,
+  "difficulty": "intermediate",
+  "objectives": [
+    "深入理解人工智能的技术原理和算法基础",
+    "掌握机器学习的基本概念和方法",
+    "学习神经网络和深度学习的核心思想",
+    "通过项目实践掌握AI应用开发",
+    "了解AI技术的前沿发展和社会影响",
+    "培养AI伦理意识和批判性思维"
+  ],
+  "lessons": [
+    {
+      "lessonId": "lesson-01",
+      "title": "人工智能发展史",
+      "order": 1,
+      "description": "回顾AI的发展历程，了解AI三次浪潮。",
+      "content": "从图灵测试到AlphaGo，探索AI发展的精彩历程。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-01.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/01-人工智能发展史.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-02",
+      "title": "机器学习入门",
+      "order": 2,
+      "description": "理解机器学习的基本概念和分类方法。",
+      "content": "探索监督学习、无监督学习和强化学习的奥秘。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-02.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/02-机器学习入门.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-03",
+      "title": "数据与特征工程",
+      "order": 3,
+      "description": "学习数据预处理和特征提取的方法。",
+      "content": "掌握数据清洗、特征选择和特征工程的核心技术。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-03.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/03-数据与特征工程.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-04",
+      "title": "神经网络原理",
+      "order": 4,
+      "description": "理解神经网络的基本结构和工作原理。",
+      "content": "从感知机到多层神经网络，揭秘深度学习的基础。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-04.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/04-神经网络原理.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-05",
+      "title": "深度学习应用",
+      "order": 5,
+      "description": "探索深度学习在各领域的应用实例。",
+      "content": "了解CNN、RNN等深度学习模型的实际应用。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-05.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/05-深度学习应用.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-06",
+      "title": "自然语言处理",
+      "order": 6,
+      "description": "学习计算机如何理解和生成人类语言。",
+      "content": "探索NLP技术，从词向量到大语言模型。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-06.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/06-自然语言处理.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-07",
+      "title": "计算机视觉",
+      "order": 7,
+      "description": "深入理解图像识别和目标检测技术。",
+      "content": "掌握计算机视觉的核心算法和应用场景。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-07.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/07-计算机视觉.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-08",
+      "title": "强化学习基础",
+      "order": 8,
+      "description": "了解强化学习的核心思想和应用。",
+      "content": "探索从Q-Learning到AlphaGo的强化学习之路。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-08.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/08-强化学习基础.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-09",
+      "title": "AI项目实战",
+      "order": 9,
+      "description": "动手完成一个完整的AI应用项目。",
+      "content": "综合运用所学知识，开发实际的AI应用。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-09.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/09-AI项目实战.pptx",
+      "duration": 40
+    },
+    {
+      "lessonId": "lesson-10",
+      "title": "AI伦理与未来",
+      "order": 10,
+      "description": "探讨AI技术的伦理问题和未来发展方向。",
+      "content": "思考AI对社会的影响，培养负责任的AI开发理念。",
+      "videoUrl": "/courses/ai-literacy-middle-school/videos/lesson-10.mp4",
+      "pptUrl": "/courses/ai-literacy-middle-school/ppts/10-AI伦理与未来.pptx",
+      "duration": 40
+    }
+  ],
+  "isPublished": true
+}

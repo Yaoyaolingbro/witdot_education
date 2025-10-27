@@ -1,0 +1,34 @@
+{
+  "lessonId": "lesson-05",
+  "title": "语音识别揭秘 - 测验",
+  "questions": [
+    {
+      "question": "语音识别的第一步是什么？",
+      "type": "choice",
+      "options": ["输出文字", "采集声音信号", "理解语义", "翻译语言"],
+      "answer": "采集声音信号",
+      "points": 10
+    },
+    {
+      "question": "声音是通过什么传播的？",
+      "type": "choice",
+      "options": ["光波", "电波", "声波", "热量"],
+      "answer": "声波",
+      "points": 10
+    },
+    {
+      "question": "计算机将声音转换成文字的技术叫做_____识别。",
+      "type": "fill",
+      "options": [],
+      "answer": "语音",
+      "points": 15
+    },
+    {
+      "question": "下列哪个因素不会影响语音识别的准确率？",
+      "type": "choice",
+      "options": ["说话速度", "环境噪音", "口音差异", "说话人的身高"],
+      "answer": "说话人的身高",
+      "points": 15
+    }
+  ]
+}

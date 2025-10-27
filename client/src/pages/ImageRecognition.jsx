@@ -4,6 +4,7 @@ import BlocklyEditor from '@/components/blockly/BlocklyEditor';
 import { imageRecognitionToolbox } from '@/blockly/toolbox';
 import { javascriptGenerator } from 'blockly/javascript';
 import axios from 'axios';
+import { useToast } from '@/components/common/Toast';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
@@ -13,6 +14,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
  */
 export default function ImageRecognition() {
   const navigate = useNavigate();
+  const { success, error: showError, warning } = useToast();
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get('projectId');
 
@@ -87,7 +89,7 @@ export default function ImageRecognition() {
       setBlocksJson(project.blocksJson);
     } catch (error) {
       console.error('Failed to load project:', error);
-      alert('加载项目失败');
+      showError('加载项目失败');
     }
   };
 
@@ -98,7 +100,7 @@ export default function ImageRecognition() {
 
     // 限制文件大小为 2MB
     if (file.size > 2 * 1024 * 1024) {
-      alert('图片大小不能超过 2MB');
+      warning('图片大小不能超过 2MB');
       return;
     }
 
@@ -117,12 +119,12 @@ export default function ImageRecognition() {
   // 运行 Blockly Agent
   const handleRunAgent = async () => {
     if (!uploadedImage) {
-      alert('请先上传图片');
+      warning('请先上传图片');
       return;
     }
 
     if (!blocksJson) {
-      alert('请先在画布上创建积木逻辑');
+      warning('请先在画布上创建积木逻辑');
       return;
     }
 
@@ -186,7 +188,7 @@ export default function ImageRecognition() {
   // 保存项目
   const handleSaveProject = async () => {
     if (!blocksJson) {
-      alert('没有可保存的内容');
+      warning('没有可保存的内容');
       return;
     }
 
@@ -203,10 +205,10 @@ export default function ImageRecognition() {
           }
         });
 
-        alert('保存成功！');
+        success('保存成功！');
       } catch (error) {
         console.error('保存失败:', error);
-        alert('保存失败，请重试');
+        showError('保存失败，请重试');
       }
       return;
     }
@@ -232,10 +234,10 @@ export default function ImageRecognition() {
       setCurrentProject(savedProject);
       window.history.replaceState(null, '', `/canvas/image-recognition?projectId=${savedProject._id}`);
 
-      alert('保存成功！');
+      success('保存成功！');
     } catch (error) {
       console.error('保存失败:', error);
-      alert('保存失败，请重试');
+      showError('保存失败，请重试');
     }
   };
 

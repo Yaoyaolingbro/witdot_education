@@ -1,0 +1,34 @@
+{
+  "lessonId": "lesson-01",
+  "title": "创造你的机器人伙伴 - 测验",
+  "questions": [
+    {
+      "question": "人工智能（AI）的中文全称是什么？",
+      "type": "choice",
+      "options": ["人造智慧", "人工智能", "机器智能", "电脑大脑"],
+      "answer": "人工智能",
+      "points": 10
+    },
+    {
+      "question": "下列哪个不是AI在生活中的应用？",
+      "type": "choice",
+      "options": ["智能音箱", "人脸识别", "传统电灯开关", "语音助手"],
+      "answer": "传统电灯开关",
+      "points": 10
+    },
+    {
+      "question": "机器人需要具备哪三个基本要素？（填空：传感器、_____、执行器）",
+      "type": "fill",
+      "options": [],
+      "answer": "控制系统",
+      "points": 15
+    },
+    {
+      "question": "AI技术可以帮助我们做什么？",
+      "type": "choice",
+      "options": ["自动驾驶汽车", "医疗诊断辅助", "智能推荐", "以上都是"],
+      "answer": "以上都是",
+      "points": 15
+    }
+  ]
+}

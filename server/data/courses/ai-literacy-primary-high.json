@@ -1,10 +1,10 @@
 {
   "courseId": "ai-literacy-primary-high",
-  "title": "AI 通识教育课程（小学高年级-初中）",
+  "title": "AI 通识教育课程（小学4-6年级）",
   "description": "通过生动有趣的案例和实践活动，让学生理解 AI 的基本原理，包括图像识别、语音识别、机器人控制等核心概念，培养面向未来的 AI 素养。",
   "gradeLevel": "4-6",
   "category": "ai_literacy",
-  "coverImage": "/courses/ai-literacy-primary-high/cover.jpg",
+  "coverImage": "/courses/ai-literacy-primary-high/cover.png",
   "duration": 360,
   "difficulty": "beginner",
   "objectives": [

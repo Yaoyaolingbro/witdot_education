@@ -205,4 +205,118 @@ router.get('/templates/list', async (req, res) => {
   }
 });
 
+/**
+ * POST /api/projects/:id/share
+ * 生成项目分享链接
+ */
+router.post('/:id/share', auth, async (req, res) => {
+  try {
+    const project = await Project.findOne({
+      _id: req.params.id,
+      userId: req.user.id
+    });
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        error: '项目不存在'
+      });
+    }
+
+    // 生成分享链接
+    await project.generateShareToken();
+
+    res.json({
+      success: true,
+      message: '分享链接生成成功',
+      shareToken: project.shareToken,
+      shareUrl: `${req.protocol}://${req.get('host')}/share/${project.shareToken}`
+    });
+  } catch (error) {
+    console.error('Generate share link error:', error);
+    res.status(500).json({
+      success: false,
+      error: '生成分享链接失败'
+    });
+  }
+});
+
+/**
+ * DELETE /api/projects/:id/share
+ * 取消项目分享
+ */
+router.delete('/:id/share', auth, async (req, res) => {
+  try {
+    const project = await Project.findOne({
+      _id: req.params.id,
+      userId: req.user.id
+    });
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        error: '项目不存在'
+      });
+    }
+
+    // 取消分享
+    await project.revokeShare();
+
+    res.json({
+      success: true,
+      message: '分享已取消'
+    });
+  } catch (error) {
+    console.error('Revoke share error:', error);
+    res.status(500).json({
+      success: false,
+      error: '取消分享失败'
+    });
+  }
+});
+
+/**
+ * GET /api/projects/shared/:shareToken
+ * 通过分享链接访问项目（公开访问，不需要认证）
+ */
+router.get('/shared/:shareToken', async (req, res) => {
+  try {
+    const project = await Project.findOne({
+      shareToken: req.params.shareToken,
+      isPublic: true
+    }).populate('userId', 'username');
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        error: '分享链接无效或已过期'
+      });
+    }
+
+    // 增加分享访问次数
+    project.shareCount += 1;
+    await project.save();
+
+    res.json({
+      success: true,
+      project: {
+        _id: project._id,
+        title: project.title,
+        description: project.description,
+        category: project.category,
+        blocksJson: project.blocksJson,
+        coverImage: project.coverImage,
+        createdAt: project.createdAt,
+        author: project.userId?.username || '匿名用户'
+      }
+    });
+  } catch (error) {
+    console.error('Get shared project error:', error);
+    res.status(500).json({
+      success: false,
+      error: '获取分享项目失败'
+    });
+  }
+});
+
 module.exports = router;

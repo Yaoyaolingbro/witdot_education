@@ -14,6 +14,18 @@ const loadCourseFromConfig = async (configFileName) => {
   }
 };
 
+// 从单独的文件加载quiz数据
+const loadQuizData = async (courseId, lessonId) => {
+  try {
+    const quizPath = path.join(__dirname, '../../public/courses', courseId, 'quiz', `${lessonId}.json`);
+    const quizData = await fs.readFile(quizPath, 'utf-8');
+    return JSON.parse(quizData);
+  } catch (error) {
+    // Quiz文件不存在是正常的，不是所有章节都有quiz
+    return null;
+  }
+};
+
 // 同步课程数据到数据库
 const syncCoursesToDB = async () => {
   try {
@@ -84,9 +96,25 @@ const getCourseById = async (req, res) => {
       });
     }
 
+    // 为每个章节加载quiz数据
+    const courseData = course.toObject();
+    if (courseData.lessons && courseData.lessons.length > 0) {
+      for (let i = 0; i < courseData.lessons.length; i++) {
+        const lesson = courseData.lessons[i];
+        const quizData = await loadQuizData(courseId, lesson.lessonId);
+        if (quizData) {
+          // 返回完整的quiz对象，包含questions数组
+          courseData.lessons[i].quiz = {
+            title: quizData.title,
+            questions: quizData.questions
+          };
+        }
+      }
+    }
+
     res.json({
       success: true,
-      data: course,
+      data: courseData,
     });
   } catch (error) {
     console.error('Error fetching course:', error);
@@ -121,6 +149,17 @@ const getLessonById = async (req, res) => {
       });
     }
 
+    // 加载quiz数据
+    const lessonData = lesson.toObject();
+    const quizData = await loadQuizData(courseId, lessonId);
+    if (quizData) {
+      // 返回完整的quiz对象，包含questions数组
+      lessonData.quiz = {
+        title: quizData.title,
+        questions: quizData.questions
+      };
+    }
+
     res.json({
       success: true,
       data: {
@@ -129,7 +168,7 @@ const getLessonById = async (req, res) => {
           title: course.title,
           coverImage: course.coverImage,
         },
-        lesson,
+        lesson: lessonData,
       },
     });
   } catch (error) {

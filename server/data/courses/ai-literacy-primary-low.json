@@ -1,0 +1,69 @@
+{
+  "courseId": "ai-literacy-primary-low",
+  "title": "AI 通识教育课程（小学1-3年级）",
+  "description": "专为1-3年级学生设计的AI启蒙课程，通过趣味互动和简单实践，让孩子初步认识人工智能，激发对科技的兴趣。",
+  "gradeLevel": "1-3",
+  "category": "ai_literacy",
+  "coverImage": "/courses/ai-literacy-primary-low/cover.jpg",
+  "duration": 240,
+  "difficulty": "beginner",
+  "objectives": [
+    "初步认识什么是人工智能",
+    "了解AI在生活中的简单应用",
+    "培养对科技的好奇心和兴趣",
+    "学习与AI互动的基本方式"
+  ],
+  "lessons": [
+    {
+      "lessonId": "lesson-01",
+      "title": "AI是什么？",
+      "order": 1,
+      "description": "通过生动的例子认识什么是人工智能。",
+      "content": "让我们一起探索AI的奇妙世界！",
+      "videoUrl": "/courses/ai-literacy-primary-low/videos/lesson-01.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-low/ppts/01-AI是什么.pptx",
+      "duration": 30
+    },
+    {
+      "lessonId": "lesson-02",
+      "title": "会说话的机器人",
+      "order": 2,
+      "description": "认识语音助手，了解AI如何听懂我们说话。",
+      "content": "探索语音识别的神奇魔法！",
+      "videoUrl": "/courses/ai-literacy-primary-low/videos/lesson-02.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-low/ppts/02-会说话的机器人.pptx",
+      "duration": 30
+    },
+    {
+      "lessonId": "lesson-03",
+      "title": "会认图片的电脑",
+      "order": 3,
+      "description": "了解电脑如何识别图片中的内容。",
+      "content": "让我们看看AI是怎么认识猫咪和小狗的！",
+      "videoUrl": "/courses/ai-literacy-primary-low/videos/lesson-03.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-low/ppts/03-会认图片的电脑.pptx",
+      "duration": 30
+    },
+    {
+      "lessonId": "lesson-04",
+      "title": "AI小助手",
+      "order": 4,
+      "description": "认识生活中的AI助手，了解它们如何帮助我们。",
+      "content": "探索AI如何让我们的生活更便捷！",
+      "videoUrl": "/courses/ai-literacy-primary-low/videos/lesson-04.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-low/ppts/04-AI小助手.pptx",
+      "duration": 30
+    },
+    {
+      "lessonId": "lesson-05",
+      "title": "我和AI做朋友",
+      "order": 5,
+      "description": "学习如何正确使用AI，成为AI的好朋友。",
+      "content": "让我们一起学会和AI友好相处！",
+      "videoUrl": "/courses/ai-literacy-primary-low/videos/lesson-05.mp4",
+      "pptUrl": "/courses/ai-literacy-primary-low/ppts/05-我和AI做朋友.pptx",
+      "duration": 30
+    }
+  ],
+  "isPublished": true
+}

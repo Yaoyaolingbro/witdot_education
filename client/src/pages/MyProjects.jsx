@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useToast } from '../components/common/Toast';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
@@ -10,6 +11,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
  */
 export default function MyProjects() {
   const navigate = useNavigate();
+  const { success, error: showError } = useToast();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -77,10 +79,10 @@ export default function MyProjects() {
 
       // 刷新列表
       fetchProjects(selectedCategory);
-      alert('删除成功');
+      success('删除成功');
     } catch (err) {
       console.error('Failed to delete project:', err);
-      alert('删除失败，请重试');
+      showError('删除失败，请重试');
     }
   };
 

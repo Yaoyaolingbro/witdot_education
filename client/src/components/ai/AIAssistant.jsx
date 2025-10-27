@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChatMessage from './ChatMessage';
-import axios from 'axios';
+import * as conversationsAPI from '../../api/conversations';
 
 /**
  * AI 助教组件
@@ -15,18 +15,68 @@ export default function AIAssistant({
   onClose = null,
   className = ''
 }) {
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: type === 'homepage'
-        ? '你好！我是小智，你的AI学习助手。有什么问题可以问我哦！'
-        : '你好！我是课程小助手，有不懂的地方可以问我！'
-    }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [conversationId, setConversationId] = useState(null);
+  const [loadingHistory, setLoadingHistory] = useState(true);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  // 初始化：加载或创建对话
+  useEffect(() => {
+    const initConversation = async () => {
+      try {
+        setLoadingHistory(true);
+
+        // 根据类型确定对话参数
+        let conversationType = 'global';
+        if (type === 'course' && courseId) {
+          conversationType = lessonId ? 'lesson' : 'course';
+        }
+
+        // 获取或创建对话
+        const conversation = await conversationsAPI.getOrCreateConversation(
+          conversationType,
+          courseId,
+          lessonId
+        );
+
+        setConversationId(conversation._id);
+
+        // 加载历史消息
+        if (conversation.messages && conversation.messages.length > 0) {
+          setMessages(conversation.messages.map(m => ({
+            role: m.role,
+            content: m.content,
+          })));
+        } else {
+          // 没有历史消息，显示欢迎消息
+          setMessages([
+            {
+              role: 'assistant',
+              content: type === 'homepage'
+                ? '你好！我是小智，你的AI学习助手。有什么问题可以问我哦！'
+                : '你好！我是课程小助手，有不懂的地方可以问我！'
+            }
+          ]);
+        }
+      } catch (error) {
+        console.error('初始化对话失败:', error);
+        // 失败时显示默认欢迎消息
+        setMessages([
+          {
+            role: 'assistant',
+            content: '你好！我是小智，你的AI学习助手。有什么问题可以问我哦！'
+          }
+        ]);
+      } finally {
+        setLoadingHistory(false);
+      }
+    };
+
+    initConversation();
+  }, [type, courseId, lessonId]);
 
   // 自动滚动到底部
   const scrollToBottom = () => {
@@ -44,7 +94,7 @@ export default function AIAssistant({
 
   // 发送消息（使用流式响应）
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || !conversationId) return;
 
     const userMessage = {
       role: 'user',
@@ -54,6 +104,13 @@ export default function AIAssistant({
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
+
+    // 保存用户消息到对话历史
+    try {
+      await conversationsAPI.addMessage(conversationId, 'user', userMessage.content);
+    } catch (error) {
+      console.error('保存用户消息失败:', error);
+    }
 
     // 添加一个占位消息用于流式更新
     const placeholderMessage = {
@@ -110,12 +167,16 @@ export default function AIAssistant({
             const data = line.slice(6);
 
             if (data === '[DONE]') {
-              // 流式结束
+              // 流式结束，保存AI回复到对话历史
               setMessages(prev => {
                 const newMessages = [...prev];
                 const lastMessage = newMessages[newMessages.length - 1];
                 if (lastMessage.isStreaming) {
                   delete lastMessage.isStreaming;
+
+                  // 保存AI消息到对话历史
+                  conversationsAPI.addMessage(conversationId, 'assistant', lastMessage.content)
+                    .catch(err => console.error('保存AI消息失败:', err));
                 }
                 return newMessages;
               });
@@ -152,16 +213,22 @@ export default function AIAssistant({
       console.error('AI 助教错误:', error);
 
       // 移除占位消息，添加错误消息
+      const errorMessage = {
+        role: 'assistant',
+        content: error.message || '抱歉，我暂时无法回答。请稍后再试。'
+      };
+
       setMessages(prev => {
         const newMessages = prev.filter(m => !m.isStreaming);
-        return [
-          ...newMessages,
-          {
-            role: 'assistant',
-            content: error.message || '抱歉，我暂时无法回答。请稍后再试。'
-          }
-        ];
+        return [...newMessages, errorMessage];
       });
+
+      // 保存错误消息到对话历史
+      try {
+        await conversationsAPI.addMessage(conversationId, 'assistant', errorMessage.content);
+      } catch (err) {
+        console.error('保存错误消息失败:', err);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -224,23 +291,33 @@ export default function AIAssistant({
 
       {/* 聊天记录区 */}
       <div className="flex-1 overflow-y-auto p-4 bg-gray-50">
-        {messages.map((msg, i) => (
-          <ChatMessage key={i} {...msg} />
-        ))}
-
-        {/* 加载动画 */}
-        {isLoading && (
-          <div className="flex items-center gap-2 text-gray-500 mb-3">
-            <div className="flex gap-1">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-            </div>
-            <span className="text-sm">小智正在思考...</span>
+        {/* 加载历史消息 */}
+        {loadingHistory ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="w-8 h-8 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mb-3"></div>
+            <p className="text-gray-500 text-sm">加载对话历史...</p>
           </div>
-        )}
+        ) : (
+          <>
+            {messages.map((msg, i) => (
+              <ChatMessage key={i} {...msg} />
+            ))}
 
-        <div ref={messagesEndRef} />
+            {/* 加载动画 */}
+            {isLoading && (
+              <div className="flex items-center gap-2 text-gray-500 mb-3">
+                <div className="flex gap-1">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                </div>
+                <span className="text-sm">小智正在思考...</span>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </>
+        )}
       </div>
 
       {/* 快捷问题 */}

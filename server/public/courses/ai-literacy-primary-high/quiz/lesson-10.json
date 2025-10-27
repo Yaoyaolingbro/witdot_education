@@ -1,0 +1,34 @@
+{
+  "lessonId": "lesson-10",
+  "title": "AI 未来号：梦想与底线 - 测验",
+  "questions": [
+    {
+      "question": "AI技术未来可能应用在哪些领域？",
+      "type": "choice",
+      "options": ["教育", "医疗", "环境保护", "以上都是"],
+      "answer": "以上都是",
+      "points": 10
+    },
+    {
+      "question": "使用AI技术时，我们应该遵守什么原则？",
+      "type": "choice",
+      "options": ["想怎么用就怎么用", "遵守法律和伦理规范", "只考虑效率", "不需要考虑后果"],
+      "answer": "遵守法律和伦理规范",
+      "points": 10
+    },
+    {
+      "question": "AI的三个基本伦理原则是：安全、_____、公平。",
+      "type": "fill",
+      "options": [],
+      "answer": "透明",
+      "points": 15
+    },
+    {
+      "question": "作为未来的AI使用者，我们应该做什么？",
+      "type": "choice",
+      "options": ["只享受AI带来的便利", "学习AI知识，负责任地使用AI", "完全依赖AI", "拒绝使用AI"],
+      "answer": "学习AI知识，负责任地使用AI",
+      "points": 15
+    }
+  ]
+}

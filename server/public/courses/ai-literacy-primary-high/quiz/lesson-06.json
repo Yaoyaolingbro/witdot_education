@@ -1,0 +1,34 @@
+{
+  "lessonId": "lesson-06",
+  "title": "开口即魔法：语音 AI 实战 - 测验",
+  "questions": [
+    {
+      "question": "语音助手可以完成哪些任务？",
+      "type": "choice",
+      "options": ["设置闹钟", "查询天气", "播放音乐", "以上都是"],
+      "answer": "以上都是",
+      "points": 10
+    },
+    {
+      "question": "要让语音助手理解你的指令，需要说出什么？",
+      "type": "choice",
+      "options": ["唤醒词", "密码", "昵称", "地址"],
+      "answer": "唤醒词",
+      "points": 10
+    },
+    {
+      "question": "常见的语音助手唤醒词有\"小爱同学\"、\"_____\"等。",
+      "type": "fill",
+      "options": [],
+      "answer": "小度小度",
+      "points": 15
+    },
+    {
+      "question": "为什么语音控制在开车时特别有用？",
+      "type": "choice",
+      "options": ["声音更大", "不用手操作更安全", "更便宜", "更快"],
+      "answer": "不用手操作更安全",
+      "points": 15
+    }
+  ]
+}

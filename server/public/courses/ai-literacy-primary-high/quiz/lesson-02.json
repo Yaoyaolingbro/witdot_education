@@ -1,0 +1,34 @@
+{
+  "lessonId": "lesson-02",
+  "title": "AI 悄悄陪伴的一天 - 测验",
+  "questions": [
+    {
+      "question": "早上叫醒你的智能闹钟使用了什么AI技术？",
+      "type": "choice",
+      "options": ["语音识别", "图像识别", "睡眠监测", "以上都有"],
+      "answer": "以上都有",
+      "points": 10
+    },
+    {
+      "question": "视频平台如何知道你喜欢看什么类型的视频？",
+      "type": "choice",
+      "options": ["随机猜测", "推荐算法", "人工推荐", "固定推荐"],
+      "answer": "推荐算法",
+      "points": 10
+    },
+    {
+      "question": "语音助手能够理解你说的话，用到的技术是_____。",
+      "type": "fill",
+      "options": [],
+      "answer": "语音识别",
+      "points": 15
+    },
+    {
+      "question": "下列哪个不是推荐系统的应用场景？",
+      "type": "choice",
+      "options": ["购物网站商品推荐", "音乐平台歌曲推荐", "计算器计算结果", "新闻客户端内容推荐"],
+      "answer": "计算器计算结果",
+      "points": 15
+    }
+  ]
+}

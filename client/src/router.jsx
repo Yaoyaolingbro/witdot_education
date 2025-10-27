@@ -7,6 +7,7 @@ import LessonDetail from './pages/LessonDetail';
 import CanvasCoding from './pages/CanvasCoding';
 import ImageRecognition from './pages/ImageRecognition';
 import MyProjects from './pages/MyProjects';
+import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -53,7 +54,11 @@ export const router = createBrowserRouter([
       },
       {
         path: 'my-learning',
-        element: <div className="p-8">我的学习（开发中）</div>,
+        element: <Profile />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
       },
     ],
   },

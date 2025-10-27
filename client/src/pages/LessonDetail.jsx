@@ -2,17 +2,22 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Container from '../components/layout/Container';
 import PPTViewer from '../components/PPTViewer';
+import QuizComponent from '../components/course/QuizComponent';
+import { useToast } from '../components/common/Toast';
 import * as coursesAPI from '../api/courses';
 import * as recordsAPI from '../api/records';
 
 export default function LessonDetail() {
   const { courseId, lessonId } = useParams();
+  const { success, error: showError } = useToast();
   const [lessonData, setLessonData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showPPTViewer, setShowPPTViewer] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [completingStatus, setCompletingStatus] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [quizCompleted, setQuizCompleted] = useState(false);
   const startTimeRef = useRef(null);
 
   useEffect(() => {
@@ -72,13 +77,34 @@ export default function LessonDetail() {
       setIsCompleted(true);
 
       // 显示成功提示
-      alert('恭喜你完成了这一章节！');
+      success('恭喜你完成了这一章节！');
     } catch (err) {
       console.error('Error marking complete:', err);
-      alert('标记完成失败，请稍后重试');
+      showError('标记完成失败，请稍后重试');
     } finally {
       setCompletingStatus(false);
     }
+  };
+
+  const handleQuizSubmit = async (answers, result) => {
+    try {
+      const response = await recordsAPI.submitQuiz(courseId, lessonId, answers);
+      console.log('Quiz submitted:', response);
+      setQuizCompleted(true);
+
+      // 如果测验通过（得分>=60%），自动标记章节完成
+      if (result.percentage >= 60 && !isCompleted) {
+        await recordsAPI.markSectionComplete(courseId, lessonId);
+        setIsCompleted(true);
+      }
+    } catch (err) {
+      console.error('Error submitting quiz:', err);
+      showError('提交测验失败，请稍后重试');
+    }
+  };
+
+  const handleQuizClose = () => {
+    setShowQuiz(false);
   };
 
   // 将相对路径转换为完整的后端 URL
@@ -215,6 +241,51 @@ export default function LessonDetail() {
           <div className="prose prose-primary max-w-none">
             <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{lesson.content}</p>
           </div>
+        </div>
+      )}
+
+      {/* 测验区域 */}
+      {lesson.quiz && lesson.quiz.questions && lesson.quiz.questions.length > 0 && (
+        <div className="mb-6">
+          {!showQuiz ? (
+            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg shadow-sm p-6 border-2 border-purple-200">
+              <div className="flex items-start justify-between">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">📝</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">
+                      章节测验
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-2">
+                      通过测验检验你的学习成果吧！共 {lesson.quiz.questions.length} 道题目
+                    </p>
+                    {quizCompleted && (
+                      <div className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 text-xs rounded mt-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        已完成测验
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowQuiz(true)}
+                  className="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white font-medium rounded-lg transition-all transform hover:scale-105 shadow-md"
+                >
+                  {quizCompleted ? '再次测验' : '开始测验'}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <QuizComponent
+              quiz={lesson.quiz}
+              onSubmit={handleQuizSubmit}
+              onClose={handleQuizClose}
+            />
+          )}
         </div>
       )}
 

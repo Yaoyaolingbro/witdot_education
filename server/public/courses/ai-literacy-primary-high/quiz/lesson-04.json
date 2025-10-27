@@ -1,0 +1,34 @@
+{
+  "lessonId": "lesson-04",
+  "title": "动手教 AI 看图识物 - 测验",
+  "questions": [
+    {
+      "question": "训练AI识别图片的第一步是什么？",
+      "type": "choice",
+      "options": ["收集和标注数据", "直接让AI识别", "购买识别软件", "等待AI自学"],
+      "answer": "收集和标注数据",
+      "points": 10
+    },
+    {
+      "question": "为什么需要给图片打标签（标注）？",
+      "type": "choice",
+      "options": ["让图片更好看", "告诉AI这是什么", "增加图片数量", "压缩图片大小"],
+      "answer": "告诉AI这是什么",
+      "points": 10
+    },
+    {
+      "question": "训练数据越多，AI识别的准确率通常会越_____。",
+      "type": "fill",
+      "options": [],
+      "answer": "高",
+      "points": 15
+    },
+    {
+      "question": "如果想让AI区分苹果和橙子，至少需要准备什么？",
+      "type": "choice",
+      "options": ["只需要文字描述", "各一张图片就够了", "多张苹果和橙子的图片并标注", "不需要任何准备"],
+      "answer": "多张苹果和橙子的图片并标注",
+      "points": 15
+    }
+  ]
+}
