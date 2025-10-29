@@ -4,6 +4,63 @@ import { javascriptGenerator } from 'blockly/javascript';
 import '@/blockly/blocks/aiBlocks'; // 导入自定义积木
 import { toolboxConfig } from '@/blockly/toolbox';
 import 'blockly/blocks'; // 导入内置积木
+import '@/styles/blockly-custom.css'; // 导入自定义样式
+
+// 创建自定义主题（保留颜色优化）
+const customTheme = Blockly.Theme.defineTheme('custom', {
+  'base': Blockly.Themes.Classic,
+  'blockStyles': {
+    'ai_blocks': {
+      'colourPrimary': '#9333EA',
+      'colourSecondary': '#A855F7',
+      'colourTertiary': '#7C3AED'
+    },
+    'io_blocks': {
+      'colourPrimary': '#10B981',
+      'colourSecondary': '#34D399',
+      'colourTertiary': '#059669'
+    },
+    'logic_blocks': {
+      'colourPrimary': '#3B82F6',
+      'colourSecondary': '#60A5FA',
+      'colourTertiary': '#2563EB'
+    },
+    'loop_blocks': {
+      'colourPrimary': '#3B82F6',
+      'colourSecondary': '#60A5FA',
+      'colourTertiary': '#2563EB'
+    },
+    'math_blocks': {
+      'colourPrimary': '#F59E0B',
+      'colourSecondary': '#FBBF24',
+      'colourTertiary': '#D97706'
+    },
+    'text_blocks': {
+      'colourPrimary': '#06B6D4',
+      'colourSecondary': '#22D3EE',
+      'colourTertiary': '#0891B2'
+    },
+    'variable_blocks': {
+      'colourPrimary': '#EF4444',
+      'colourSecondary': '#F87171',
+      'colourTertiary': '#DC2626'
+    }
+  },
+  'componentStyles': {
+    'workspaceBackgroundColour': '#F9FAFB',
+    'toolboxBackgroundColour': '#FFFFFF',
+    'toolboxForegroundColour': '#1F2937',
+    'flyoutBackgroundColour': '#F3F4F6',
+    'flyoutForegroundColour': '#1F2937',
+    'flyoutOpacity': 0.95,
+    'scrollbarColour': '#D1D5DB',
+    'scrollbarOpacity': 0.5,
+    'insertionMarkerColour': '#8B5CF6',
+    'insertionMarkerOpacity': 0.3,
+    'markerColour': '#8B5CF6',
+    'cursorColour': '#8B5CF6'
+  }
+});
 
 /**
  * BlocklyEditor 组件
@@ -22,14 +79,14 @@ export default function BlocklyEditor({
 
   useEffect(() => {
     if (blocklyDiv.current && !workspace.current) {
-      // 初始化 Blockly 工作区
+      // 初始化 Blockly 工作区（使用默认渲染器和自定义主题）
       workspace.current = Blockly.inject(blocklyDiv.current, {
         toolbox,
         readOnly,
         grid: {
           spacing: 20,
           length: 3,
-          colour: '#ccc',
+          colour: '#e5e7eb',
           snap: true
         },
         zoom: {
@@ -43,7 +100,8 @@ export default function BlocklyEditor({
         trashcan: true,
         scrollbars: true,
         sounds: false,
-        oneBasedIndex: false
+        oneBasedIndex: false,
+        theme: customTheme // 使用自定义主题（保留颜色优化）
       });
 
       // 加载初始积木

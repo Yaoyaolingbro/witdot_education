@@ -1,0 +1,458 @@
+/**
+ * Blockly 自定义样式
+ * 参考 Scratch 3.0、Node-RED 和现代化 UI 设计
+ */
+
+/* ===== 工作区背景 ===== */
+.blocklyWorkspace {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8edf3 100%) !important;
+}
+
+/* 网格样式优化 */
+.blocklyMainBackground {
+  stroke: #dfe4ea !important;
+  stroke-width: 1 !important;
+  fill: #f5f7fa !important;
+}
+
+/* ===== 积木块样式优化 ===== */
+/* 为不同类别的积木添加渐变色和阴影效果 */
+
+/* 所有积木块通用样式 - 增强阴影和 3D 效果 */
+.blocklyPath {
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+/* AI 功能积木 - 紫色渐变 + 增强阴影 */
+.blocklyPath[fill="#a55b9a"],
+.blocklyPath[fill="#9933cc"],
+.blocklyPath[fill*="rgb(165, 91, 154)"],
+.blocklyPath[fill="#9333EA"],
+.blocklyPath[fill*="rgb(147, 51, 234)"] {
+  filter: drop-shadow(0 3px 8px rgba(139, 92, 246, 0.3))
+          drop-shadow(0 1px 2px rgba(139, 92, 246, 0.4));
+}
+
+/* 输入输出积木 - 绿色渐变 + 增强阴影 */
+.blocklyPath[fill="#59c059"],
+.blocklyPath[fill="#5cb85c"],
+.blocklyPath[fill*="rgb(89, 192, 89)"],
+.blocklyPath[fill="#10B981"],
+.blocklyPath[fill*="rgb(16, 185, 129)"] {
+  filter: drop-shadow(0 3px 8px rgba(16, 185, 129, 0.3))
+          drop-shadow(0 1px 2px rgba(16, 185, 129, 0.4));
+}
+
+/* 逻辑控制积木 - 蓝色渐变 + 增强阴影 */
+.blocklyPath[fill="#5b67a5"],
+.blocklyPath[fill="#5b80a5"],
+.blocklyPath[fill*="rgb(91, 103, 165)"],
+.blocklyPath[fill="#3B82F6"],
+.blocklyPath[fill*="rgb(59, 130, 246)"] {
+  filter: drop-shadow(0 3px 8px rgba(59, 130, 246, 0.3))
+          drop-shadow(0 1px 2px rgba(59, 130, 246, 0.4));
+}
+
+/* 数学积木 - 橙色渐变 + 增强阴影 */
+.blocklyPath[fill="#d6ab3b"],
+.blocklyPath[fill="#e6ab3b"],
+.blocklyPath[fill*="rgb(214, 171, 59)"],
+.blocklyPath[fill="#F59E0B"],
+.blocklyPath[fill*="rgb(245, 158, 11)"] {
+  filter: drop-shadow(0 3px 8px rgba(245, 158, 11, 0.3))
+          drop-shadow(0 1px 2px rgba(245, 158, 11, 0.4));
+}
+
+/* 文本积木 - 青色渐变 + 增强阴影 */
+.blocklyPath[fill="#5ba58c"],
+.blocklyPath[fill="#5ba5a5"],
+.blocklyPath[fill*="rgb(91, 165, 140)"],
+.blocklyPath[fill="#06B6D4"],
+.blocklyPath[fill*="rgb(6, 182, 212)"] {
+  filter: drop-shadow(0 3px 8px rgba(6, 182, 212, 0.3))
+          drop-shadow(0 1px 2px rgba(6, 182, 212, 0.4));
+}
+
+/* 变量积木 - 红色渐变 + 增强阴影 */
+.blocklyPath[fill="#EF4444"],
+.blocklyPath[fill*="rgb(239, 68, 68)"] {
+  filter: drop-shadow(0 3px 8px rgba(239, 68, 68, 0.3))
+          drop-shadow(0 1px 2px rgba(239, 68, 68, 0.4));
+}
+
+/* ===== 积木拖拽效果 ===== */
+.blocklyDraggable {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.blocklyDragging {
+  transform: scale(1.08) rotate(2deg);
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2))
+          drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) !important;
+  animation: float 0.3s ease-out;
+}
+
+@keyframes float {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(1deg);
+  }
+  100% {
+    transform: scale(1.08) rotate(2deg);
+  }
+}
+
+/* ===== 积木悬停效果 - 增强版 ===== */
+.blocklyBlockCanvas .blocklyDraggable:hover {
+  cursor: grab;
+  transform: translateY(-2px);
+}
+
+.blocklyBlockCanvas .blocklyDraggable:hover .blocklyPath {
+  filter: brightness(1.05)
+          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15))
+          drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1)) !important;
+}
+
+.blocklyBlockCanvas .blocklyDraggable:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+/* 积木块发光效果（选中时）*/
+.blocklySelected > .blocklyPath {
+  filter: brightness(1.1)
+          drop-shadow(0 0 12px currentColor)
+          drop-shadow(0 4px 16px rgba(0, 0, 0, 0.2)) !important;
+  animation: glow 1.5s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    filter: brightness(1.1)
+            drop-shadow(0 0 12px currentColor)
+            drop-shadow(0 4px 16px rgba(0, 0, 0, 0.2));
+  }
+  50% {
+    filter: brightness(1.15)
+            drop-shadow(0 0 20px currentColor)
+            drop-shadow(0 6px 20px rgba(0, 0, 0, 0.25));
+  }
+}
+
+/* ===== 工具箱美化 ===== */
+.blocklyToolboxDiv {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%) !important;
+  border-right: 1px solid #e5e7eb !important;
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 分类标签 */
+.blocklyTreeRow {
+  height: 44px !important;
+  padding: 10px 16px !important;
+  border-radius: 10px !important;
+  margin: 6px 10px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.blocklyTreeRow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0) 0%, rgba(118, 75, 162, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.blocklyTreeRow:hover {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+  transform: translateX(6px) scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blocklyTreeRow:hover::before {
+  opacity: 1;
+}
+
+.blocklyTreeRowContentContainer {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* 选中的分类 */
+.blocklyTreeSelected .blocklyTreeRow {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transform: translateX(4px) scale(1.02);
+}
+
+.blocklyTreeSelected .blocklyTreeRow::before {
+  opacity: 0 !important;
+}
+
+/* ===== 飞出区域（积木选择面板）===== */
+.blocklyFlyout {
+  background: white !important;
+  border-left: 1px solid #e5e7eb !important;
+}
+
+.blocklyFlyoutBackground {
+  fill: white !important;
+  fill-opacity: 0.98 !important;
+}
+
+/* ===== 滚动条美化 ===== */
+.blocklyScrollbarHandle {
+  fill: #cbd5e1 !important;
+  rx: 4 !important;
+  ry: 4 !important;
+}
+
+.blocklyScrollbarHandle:hover {
+  fill: #94a3b8 !important;
+}
+
+/* ===== 垃圾桶美化 ===== */
+.blocklyTrash {
+  transition: transform 0.2s ease;
+}
+
+.blocklyTrash:hover {
+  transform: scale(1.1);
+}
+
+/* ===== 缩放控制按钮 ===== */
+.blocklyZoom {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.blocklyZoom > image {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.blocklyZoom > image:hover {
+  opacity: 1;
+}
+
+/* ===== 输入框美化 ===== */
+.blocklyHtmlInput {
+  border: 2px solid #8b5cf6 !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif !important;
+  font-size: 14px !important;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.15) !important;
+  transition: all 0.2s ease !important;
+}
+
+.blocklyHtmlInput:focus {
+  outline: none !important;
+  border-color: #7c3aed !important;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25) !important;
+}
+
+/* ===== 下拉菜单美化 ===== */
+.blocklyDropDownDiv {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e5e7eb !important;
+  background: white !important;
+}
+
+.blocklyMenuItem {
+  padding: 8px 16px !important;
+  transition: background 0.15s ease !important;
+}
+
+.blocklyMenuItem:hover {
+  background: #f3f4f6 !important;
+}
+
+.blocklyMenuItemHighlight {
+  background: #ede9fe !important;
+}
+
+/* ===== 连接点高亮 ===== */
+.blocklyConnectionIndicator {
+  fill: #8b5cf6 !important;
+  stroke: #7c3aed !important;
+  stroke-width: 3 !important;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.8));
+  animation: pulse-glow 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.8));
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 16px rgba(139, 92, 246, 1));
+  }
+}
+
+/* 连接线美化 */
+.blocklyHighlightedConnectionPath {
+  stroke: #8b5cf6 !important;
+  stroke-width: 4 !important;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.6));
+}
+
+/* 插入标记美化 */
+.blocklyInsertionMarker {
+  opacity: 0.3 !important;
+  animation: insertion-pulse 0.6s ease-in-out;
+}
+
+@keyframes insertion-pulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}
+
+/* ===== 文本标签美化 ===== */
+.blocklyText {
+  font-family: 'Inter', -apple-system, system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  fill: #1f2937 !important;
+}
+
+/* ===== 提示气泡 ===== */
+.blocklyTooltipDiv {
+  background: #1f2937 !important;
+  color: white !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif !important;
+  font-size: 12px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ===== 自定义容器样式 ===== */
+.blockly-workspace {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1),
+              0 2px 8px rgba(0, 0, 0, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ===== 积木块输入框增强 ===== */
+.blocklyEditableText > rect {
+  fill: rgba(255, 255, 255, 0.9) !important;
+  stroke: rgba(139, 92, 246, 0.3) !important;
+  stroke-width: 2 !important;
+  rx: 6 !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: all 0.2s ease;
+}
+
+.blocklyEditableText:hover > rect {
+  fill: rgba(255, 255, 255, 1) !important;
+  stroke: rgba(139, 92, 246, 0.5) !important;
+  filter: drop-shadow(0 4px 8px rgba(139, 92, 246, 0.2));
+}
+
+/* ===== 下拉菜单箭头美化 ===== */
+.blocklyArrowTop {
+  fill: currentColor !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* ===== 数字输入框样式 ===== */
+.blocklyFieldNumericInput {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid rgba(139, 92, 246, 0.4) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+.blocklyFieldNumericInput:focus {
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+}
+
+/* ===== 飞出区域积木块动画 ===== */
+.blocklyFlyout .blocklyBlockCanvas > g {
+  animation: fade-in-block 0.3s ease-out backwards;
+}
+
+.blocklyFlyout .blocklyBlockCanvas > g:nth-child(1) { animation-delay: 0.05s; }
+.blocklyFlyout .blocklyBlockCanvas > g:nth-child(2) { animation-delay: 0.1s; }
+.blocklyFlyout .blocklyBlockCanvas > g:nth-child(3) { animation-delay: 0.15s; }
+.blocklyFlyout .blocklyBlockCanvas > g:nth-child(4) { animation-delay: 0.2s; }
+.blocklyFlyout .blocklyBlockCanvas > g:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes fade-in-block {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== 积木块组合效果 ===== */
+/* 当多个积木块连接在一起时的整体阴影 */
+.blocklyBlockCanvas > g {
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+}
+
+/* ===== 工作区网格动画（可选）===== */
+@keyframes grid-fade {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ===== 成功连接反馈动画 ===== */
+@keyframes connect-success {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 应用于刚连接的积木 */
+.blocklyDragging.blocklyConnection {
+  animation: connect-success 0.3s ease-out;
+}

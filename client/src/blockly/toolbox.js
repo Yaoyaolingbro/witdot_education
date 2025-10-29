@@ -82,6 +82,20 @@ export const toolboxConfig = {
               }
             }
           }
+        },
+        {
+          kind: 'block',
+          type: 'io_show_message',
+          inputs: {
+            MESSAGE: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '你好！'
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -90,6 +104,76 @@ export const toolboxConfig = {
       name: '🔵 基础逻辑',
       colour: 210,
       contents: [
+        {
+          kind: 'block',
+          type: 'logic_if_simple',
+          inputs: {
+            CONDITION: {
+              shadow: {
+                type: 'logic_compare_number'
+              }
+            }
+          }
+        },
+        {
+          kind: 'block',
+          type: 'logic_if_else',
+          inputs: {
+            CONDITION: {
+              shadow: {
+                type: 'logic_compare_number'
+              }
+            }
+          }
+        },
+        {
+          kind: 'block',
+          type: 'loop_repeat'
+        },
+        {
+          kind: 'block',
+          type: 'logic_compare_number',
+          inputs: {
+            A: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            },
+            B: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'block',
+          type: 'logic_compare_text',
+          inputs: {
+            A: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '你好'
+                }
+              }
+            },
+            B: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '你好'
+                }
+              }
+            }
+          }
+        },
         {
           kind: 'block',
           type: 'logic_wait'
@@ -125,6 +209,35 @@ export const toolboxConfig = {
       contents: [
         {
           kind: 'block',
+          type: 'number_value',
+          fields: {
+            NUM: 0
+          }
+        },
+        {
+          kind: 'block',
+          type: 'math_operation',
+          inputs: {
+            A: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            },
+            B: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            }
+          }
+        },
+        {
+          kind: 'block',
           type: 'math_number',
           fields: {
             NUM: 0
@@ -144,6 +257,28 @@ export const toolboxConfig = {
         {
           kind: 'block',
           type: 'text_value'
+        },
+        {
+          kind: 'block',
+          type: 'text_join_simple',
+          inputs: {
+            TEXT1: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '你好'
+                }
+              }
+            },
+            TEXT2: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '世界'
+                }
+              }
+            }
+          }
         },
         {
           kind: 'block',
@@ -200,6 +335,100 @@ export const imageRecognitionToolbox = {
         {
           kind: 'block',
           type: 'io_display_result'
+        },
+        {
+          kind: 'block',
+          type: 'io_show_message',
+          inputs: {
+            MESSAGE: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '你好！'
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      kind: 'category',
+      name: '🔵 基础逻辑',
+      colour: 210,
+      contents: [
+        {
+          kind: 'block',
+          type: 'logic_if_simple',
+          inputs: {
+            CONDITION: {
+              shadow: {
+                type: 'logic_compare_number'
+              }
+            }
+          }
+        },
+        {
+          kind: 'block',
+          type: 'loop_repeat'
+        },
+        {
+          kind: 'block',
+          type: 'logic_compare_number',
+          inputs: {
+            A: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            },
+            B: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      kind: 'category',
+      name: '🔢 数学',
+      colour: 230,
+      contents: [
+        {
+          kind: 'block',
+          type: 'number_value',
+          fields: {
+            NUM: 0
+          }
+        },
+        {
+          kind: 'block',
+          type: 'math_operation',
+          inputs: {
+            A: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            },
+            B: {
+              shadow: {
+                type: 'number_value',
+                fields: {
+                  NUM: 1
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -211,6 +440,28 @@ export const imageRecognitionToolbox = {
         {
           kind: 'block',
           type: 'text_value'
+        },
+        {
+          kind: 'block',
+          type: 'text_join_simple',
+          inputs: {
+            TEXT1: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '你好'
+                }
+              }
+            },
+            TEXT2: {
+              shadow: {
+                type: 'text_value',
+                fields: {
+                  TEXT: '世界'
+                }
+              }
+            }
+          }
         }
       ]
     }

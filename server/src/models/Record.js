@@ -12,10 +12,9 @@ const recordSchema = new mongoose.Schema({
     required: true,
   },
 
-  // 课程 ID
+  // 课程 ID（字符串类型，对应 Course 模型的 courseId 字段）
   courseId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Course',
+    type: String,
     required: true,
   },
 
@@ -27,20 +26,20 @@ const recordSchema = new mongoose.Schema({
     max: 100,
   },
 
-  // 已完成章节 ID 列表
+  // 已完成章节 ID 列表（字符串类型，对应 lesson 的 lessonId）
   completedSections: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
   }],
 
   // 当前学习章节 ID
   currentSectionId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
   },
 
   // 测验成绩
   quizScores: [{
     sectionId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true,
     },
     score: {
@@ -72,7 +71,7 @@ const recordSchema = new mongoose.Schema({
 
   // 学习时长记录（每次学习的时长）
   timeLogs: [{
-    sectionId: mongoose.Schema.Types.ObjectId,
+    sectionId: String,
     startTime: Date,
     endTime: Date,
     duration: Number, // 秒
