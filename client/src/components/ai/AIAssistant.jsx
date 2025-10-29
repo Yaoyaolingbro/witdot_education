@@ -56,7 +56,7 @@ export default function AIAssistant({
             {
               role: 'assistant',
               content: type === 'homepage'
-                ? '你好！我是小智，你的AI学习助手。有什么问题可以问我哦！'
+                ? '你好！我是小问，你的AI学习助手。有什么问题可以问我哦！'
                 : '你好！我是课程小助手，有不懂的地方可以问我！'
             }
           ]);
@@ -67,7 +67,7 @@ export default function AIAssistant({
         setMessages([
           {
             role: 'assistant',
-            content: '你好！我是小智，你的AI学习助手。有什么问题可以问我哦！'
+            content: '你好！我是小问，你的AI学习助手。有什么问题可以问我哦！'
           }
         ]);
       } finally {
@@ -270,7 +270,7 @@ export default function AIAssistant({
           </div>
           <div>
             <h3 className="font-bold text-lg">
-              {type === 'homepage' ? 'AI 学习助手 - 小智' : '课程小助手'}
+              {type === 'homepage' ? 'AI 学习助手 - 小问' : '课程小助手'}
             </h3>
             <p className="text-xs text-purple-100">有问题随时问我！</p>
           </div>
@@ -311,7 +311,7 @@ export default function AIAssistant({
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                   <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                 </div>
-                <span className="text-sm">小智正在思考...</span>
+                <span className="text-sm">小问正在思考...</span>
               </div>
             )}
 
@@ -370,7 +370,7 @@ export default function AIAssistant({
 
         {/* 提示文字 */}
         <p className="text-xs text-gray-500 mt-2 text-center">
-          小智会尽力帮助你，但如果遇到很难的问题，记得问老师哦！
+          小问会尽力帮助你，但如果遇到很难的问题，记得问老师哦！
         </p>
       </div>
     </div>

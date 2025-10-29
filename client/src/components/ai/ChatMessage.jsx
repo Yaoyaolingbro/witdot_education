@@ -22,7 +22,7 @@ export default function ChatMessage({ role, content, isStreaming }) {
             <div className="w-6 h-6 bg-purple-200 rounded-full flex items-center justify-center text-sm">
               🤖
             </div>
-            <span className="text-xs font-semibold text-purple-700">小智</span>
+            <span className="text-xs font-semibold text-purple-700">小问</span>
           </div>
         )}
 
