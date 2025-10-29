@@ -20,7 +20,8 @@
       "mcp__ide__getDiagnostics",
       "Bash(node src/scripts/syncCourses.js:*)",
       "Bash(node /mnt/sda2/code/edu_app/server/src/scripts/syncCourses.js:*)",
-      "WebFetch(domain:cloud.dify.ai)"
+      "WebFetch(domain:cloud.dify.ai)",
+      "Bash(chmod:*)"
     ],
     "deny": [],
     "ask": []
