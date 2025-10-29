@@ -178,6 +178,27 @@ get_project_path() {
 configure_env() {
     print_info "开始配置环境变量..."
 
+    # 检查是否已有配置文件
+    if [ -f "$PROJECT_PATH/server/.env" ]; then
+        echo ""
+        print_warning "检测到已存在的环境配置文件"
+        read -p "是否使用现有配置？(y/n) [默认: y]: " USE_EXISTING
+        USE_EXISTING=${USE_EXISTING:-y}
+
+        if [[ $USE_EXISTING =~ ^[Yy]$ ]]; then
+            print_success "使用现有环境配置"
+
+            # 从现有配置读取端口号
+            BACKEND_PORT=$(grep "^PORT=" "$PROJECT_PATH/server/.env" | cut -d'=' -f2)
+            BACKEND_PORT=${BACKEND_PORT:-3210}
+
+            print_info "后端端口: $BACKEND_PORT"
+            return 0
+        else
+            print_info "将创建新的环境配置"
+        fi
+    fi
+
     # 获取用户输入
     echo ""
     read -p "请输入后端服务端口 [默认: 3210]: " BACKEND_PORT
@@ -281,6 +302,29 @@ init_database() {
     print_success "数据库初始化完成"
 }
 
+# 修复目录权限
+fix_permissions() {
+    print_info "修复目录权限..."
+
+    # 修复 /root 目录权限（如果项目在 /root 下）
+    if [[ "$PROJECT_PATH" == /root* ]]; then
+        chmod 755 /root 2>/dev/null || true
+    fi
+
+    # 获取项目路径的父目录们并修复权限
+    local current_path="$PROJECT_PATH"
+    while [ "$current_path" != "/" ]; do
+        chmod 755 "$current_path" 2>/dev/null || true
+        current_path=$(dirname "$current_path")
+    done
+
+    # 修复项目目录权限
+    chmod -R 755 "$PROJECT_PATH/client/dist" 2>/dev/null || true
+    chmod -R 755 "$PROJECT_PATH/server/public" 2>/dev/null || true
+
+    print_success "目录权限已修复"
+}
+
 # 配置 Nginx
 configure_nginx() {
     print_info "配置 Nginx..."
@@ -349,6 +393,9 @@ EOF
             print_warning "Nginx 配置可能需要手动调整，请确保包含 conf.d 目录"
         fi
     fi
+
+    # 修复权限问题
+    fix_permissions
 
     # 测试 Nginx 配置
     nginx -t
@@ -443,58 +490,109 @@ main() {
     # 检查 root 权限
     check_root
 
-    # 获取服务器 IP
-    get_server_ip
-
     # 获取项目路径
     get_project_path
 
-    echo ""
-    read -p "是否继续部署？(y/n) " -n 1 -r
-    echo ""
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        print_info "部署已取消"
-        exit 0
+    # 检测是否已部署
+    ALREADY_DEPLOYED=false
+    if [ -f "$PROJECT_PATH/server/.env" ] && [ -f "/etc/nginx/conf.d/eduapp.conf" ]; then
+        ALREADY_DEPLOYED=true
+        print_warning "检测到已存在的部署配置"
+        echo ""
+        echo "请选择部署模式："
+        echo "  1) 更新部署（保留配置，仅更新代码）"
+        echo "  2) 完全重新部署（重新配置所有内容）"
+        echo ""
+        read -p "请选择 [1/2] (默认: 1): " DEPLOY_MODE
+        DEPLOY_MODE=${DEPLOY_MODE:-1}
+        echo ""
     fi
 
-    # 安装系统依赖
-    print_info "步骤 1/9: 安装系统依赖..."
-    install_nodejs
-    install_mongodb
-    install_nginx
-    install_pm2
+    # 获取服务器 IP
+    get_server_ip
 
-    # 配置环境变量
-    print_info "步骤 2/9: 配置环境变量..."
-    configure_env
+    echo ""
+    if [ "$DEPLOY_MODE" == "1" ] && [ "$ALREADY_DEPLOYED" = true ]; then
+        print_info "开始更新部署..."
+        read -p "是否继续？(y/n) " -n 1 -r
+        echo ""
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            print_info "部署已取消"
+            exit 0
+        fi
 
-    # 安装项目依赖
-    print_info "步骤 3/9: 安装项目依赖..."
-    install_dependencies
+        # 更新部署模式（跳过系统依赖安装和环境配置）
+        print_info "步骤 1/5: 检查系统依赖..."
+        install_nodejs
+        install_mongodb
+        install_nginx
+        install_pm2
 
-    # 构建前端
-    print_info "步骤 4/9: 构建前端..."
-    build_frontend
+        print_info "步骤 2/5: 使用现有环境配置..."
+        # 读取现有配置
+        BACKEND_PORT=$(grep "^PORT=" "$PROJECT_PATH/server/.env" | cut -d'=' -f2)
+        BACKEND_PORT=${BACKEND_PORT:-3210}
+        print_success "后端端口: $BACKEND_PORT"
 
-    # 初始化数据库
-    print_info "步骤 5/9: 初始化数据库..."
-    init_database
+        print_info "步骤 3/5: 更新项目依赖并构建..."
+        install_dependencies
+        build_frontend
 
-    # 配置 Nginx
-    print_info "步骤 6/9: 配置 Nginx..."
-    configure_nginx
+        print_info "步骤 4/5: 重启服务..."
+        configure_nginx
+        start_backend
 
-    # 启动后端服务
-    print_info "步骤 7/9: 启动后端服务..."
-    start_backend
+        print_info "步骤 5/5: 完成更新..."
+        show_deployment_info
+    else
+        # 完整部署模式
+        print_info "开始完整部署..."
+        read -p "是否继续部署？(y/n) " -n 1 -r
+        echo ""
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            print_info "部署已取消"
+            exit 0
+        fi
 
-    # 配置防火墙
-    print_info "步骤 8/9: 配置防火墙..."
-    configure_firewall
+        # 安装系统依赖
+        print_info "步骤 1/9: 安装系统依赖..."
+        install_nodejs
+        install_mongodb
+        install_nginx
+        install_pm2
 
-    # 显示部署信息
-    print_info "步骤 9/9: 完成部署..."
-    show_deployment_info
+        # 配置环境变量
+        print_info "步骤 2/9: 配置环境变量..."
+        configure_env
+
+        # 安装项目依赖
+        print_info "步骤 3/9: 安装项目依赖..."
+        install_dependencies
+
+        # 构建前端
+        print_info "步骤 4/9: 构建前端..."
+        build_frontend
+
+        # 初始化数据库
+        print_info "步骤 5/9: 初始化数据库..."
+        init_database
+
+        # 配置 Nginx
+        print_info "步骤 6/9: 配置 Nginx..."
+        configure_nginx
+
+        # 启动后端服务
+        print_info "步骤 7/9: 启动后端服务..."
+        start_backend
+
+        # 配置防火墙
+        print_info "步骤 8/9: 配置防火墙..."
+        configure_firewall
+
+        # 显示部署信息
+        print_info "步骤 9/9: 完成部署..."
+        show_deployment_info
+    fi
 }
 
 # 运行主函数
