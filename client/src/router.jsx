@@ -10,6 +10,7 @@ import MyProjects from './pages/MyProjects';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Chat from './pages/Chat';
 
 export const router = createBrowserRouter([
   {
@@ -61,5 +62,10 @@ export const router = createBrowserRouter([
         element: <Profile />,
       },
     ],
+  },
+  // 小问同学对话页面 - 独立路由（不使用 Layout）
+  {
+    path: '/chat',
+    element: <Chat />,
   },
 ]);

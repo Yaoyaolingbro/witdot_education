@@ -2,6 +2,44 @@ const Conversation = require('../models/Conversation');
 const Course = require('../models/Course');
 
 /**
+ * 创建新对话
+ */
+exports.createConversation = async (req, res) => {
+  try {
+    const { type, courseId, sectionId } = req.body;
+    const userId = req.user.id;
+
+    const conversationData = {
+      userId,
+      type: type || 'global',
+    };
+
+    if (courseId) {
+      conversationData.courseId = courseId;
+
+      // 获取课程信息用于上下文
+      const course = await Course.findById(courseId);
+      if (course) {
+        conversationData.context = {
+          courseContent: course.description,
+        };
+      }
+    }
+
+    if (sectionId) {
+      conversationData.sectionId = sectionId;
+    }
+
+    const conversation = await Conversation.create(conversationData);
+
+    res.status(201).json(conversation);
+  } catch (error) {
+    console.error('Create conversation error:', error);
+    res.status(500).json({ error: '创建对话失败' });
+  }
+};
+
+/**
  * 创建新对话或获取现有对话
  */
 exports.getOrCreateConversation = async (req, res) => {

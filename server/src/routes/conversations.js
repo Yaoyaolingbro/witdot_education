@@ -14,6 +14,9 @@ router.get('/', auth, conversationController.getAllConversations);
 // 获取或创建对话
 router.get('/get-or-create', auth, conversationController.getOrCreateConversation);
 
+// 创建新对话
+router.post('/', auth, conversationController.createConversation);
+
 // 获取指定对话
 router.get('/:conversationId', auth, conversationController.getConversation);
 

@@ -20,6 +20,21 @@ export const getOrCreateConversation = async (type = 'global', courseId = null, 
 };
 
 /**
+ * 创建新对话
+ * @param {string} type - 对话类型：'global' | 'course' | 'lesson'
+ * @param {string} courseId - 课程 ID（可选）
+ * @param {string} sectionId - 章节 ID（可选）
+ */
+export const createConversation = async (type = 'global', courseId = null, sectionId = null) => {
+  const data = { type };
+  if (courseId) data.courseId = courseId;
+  if (sectionId) data.sectionId = sectionId;
+
+  const response = await client.post('/conversations', data);
+  return response.data;
+};
+
+/**
  * 获取所有对话列表
  * @param {string} type - 对话类型（可选）
  * @param {string} courseId - 课程 ID（可选）
