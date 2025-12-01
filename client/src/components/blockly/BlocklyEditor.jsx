@@ -5,6 +5,7 @@ import '@/blockly/blocks/aiBlocks'; // 导入自定义积木
 import { toolboxConfig } from '@/blockly/toolbox';
 import 'blockly/blocks'; // 导入内置积木
 import '@/styles/blockly-custom.css'; // 导入自定义样式
+import '@/styles/blockly-scrollbar-fix.css'; // 导入滚动条修复样式
 
 // 创建自定义主题（保留颜色优化）
 const customTheme = Blockly.Theme.defineTheme('custom', {

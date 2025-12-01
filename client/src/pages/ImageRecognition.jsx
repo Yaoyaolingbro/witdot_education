@@ -300,7 +300,7 @@ export default function ImageRecognition() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* 顶部操作栏 */}
-      <div className="bg-white/80 backdrop-blur-sm border-b shadow-sm sticky top-0 z-10">
+      <div className="bg-white border-b shadow-sm sticky top-0" style={{ zIndex: 9999 }}>
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -463,8 +463,8 @@ export default function ImageRecognition() {
                 </span>
               </div>
 
-              <div style={{ height: '600px' }} className="w-full flex relative">
-              <div className="flex-1 min-w-0 relative overflow-y-auto overflow-x-hidden">
+              <div style={{ height: '600px' }} className="w-full flex relative overflow-hidden">
+              <div className="flex-1 min-w-0 relative overflow-hidden">
                 <BlocklyEditor
                   initialBlocks={currentProject ? currentProject.blocksJson : JSON.stringify(defaultBlocks)}
                   toolbox={imageRecognitionToolbox}

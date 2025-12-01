@@ -138,6 +138,8 @@
   background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%) !important;
   border-right: 1px solid #e5e7eb !important;
   box-shadow: 4px 0 16px rgba(0, 0, 0, 0.08) !important;
+  /* 限制 z-index，防止覆盖页面顶部栏 */
+  z-index: 5 !important;
 }
 
 /* 分类标签 */
@@ -200,6 +202,8 @@
 .blocklyFlyout {
   background: white !important;
   border-left: 1px solid #e5e7eb !important;
+  /* 限制 z-index，防止覆盖页面顶部栏 */
+  z-index: 4 !important;
 }
 
 .blocklyFlyoutBackground {
@@ -207,16 +211,7 @@
   fill-opacity: 0.98 !important;
 }
 
-/* ===== 滚动条美化 ===== */
-.blocklyScrollbarHandle {
-  fill: #cbd5e1 !important;
-  rx: 4 !important;
-  ry: 4 !important;
-}
-
-.blocklyScrollbarHandle:hover {
-  fill: #94a3b8 !important;
-}
+/* 滚动条样式已移至 blockly-scrollbar-fix.css */
 
 /* ===== 垃圾桶美化 ===== */
 /* 注意：禁用 transform，因为 Blockly 使用内联 transform 定位垃圾桶 */

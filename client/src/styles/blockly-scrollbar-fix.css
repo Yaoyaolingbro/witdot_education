@@ -1,66 +1,119 @@
 /**
- * 🚨 防僵尸滚动条核心修复
- * 专门解决 Flyout 撑开容器导致的僵尸滚动条问题
+ * 🚨 Blockly 滚动条修复
+ * 解决 Flyout 切换分类时滚动条残留问题
  */
 
-/* 强制确保所有 Blockly 容器都不会产生浏览器原生滚动条 */
+/* ===== 1. 彻底隐藏所有容器的原生浏览器滚动条 ===== */
 .blockly-workspace,
-.blockly-workspace > div,
-.blockly-workspace > div > div,
-.blockly-workspace > div > div > div,
-.blockly-workspace > div > svg,
-.blocklyWorkspace,
-.blocklyMainBackground,
-.blocklyBlockCanvas,
-.blocklyFlyout,
+.blockly-workspace *,
+.injectionDiv,
+.injectionDiv *,
 .blocklyToolboxDiv,
-.blocklyWidgetDiv {
-  overflow: hidden !important;
-  position: relative !important;
-  box-sizing: border-box !important;
-}
-
-/* 特别针对被 Flyout 撑开的父容器 */
-.blockly-workspace {
-  overflow: hidden !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  min-width: 0 !important;
-  min-height: 0 !important;
+.blocklyToolboxDiv *,
+.blocklyFlyout,
+.blocklyFlyout * {
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important; /* IE/Edge */
 }
 
-/* 确保即使内容溢出也不显示滚动条 */
-.blockly-workspace *::-webkit-scrollbar {
+.blockly-workspace::-webkit-scrollbar,
+.blockly-workspace *::-webkit-scrollbar,
+.injectionDiv::-webkit-scrollbar,
+.injectionDiv *::-webkit-scrollbar,
+.blocklyToolboxDiv::-webkit-scrollbar,
+.blocklyToolboxDiv *::-webkit-scrollbar,
+.blocklyFlyout::-webkit-scrollbar,
+.blocklyFlyout *::-webkit-scrollbar {
   display: none !important; /* Chrome/Safari/Edge */
   width: 0 !important;
   height: 0 !important;
 }
 
-/* 防止任何子元素撑开容器 */
-.blockly-workspace * {
-  max-width: 100% !important;
+/* ===== 2. 核心容器 overflow 控制 ===== */
+.blockly-workspace {
   overflow: hidden !important;
 }
 
-/* 特别处理 Flyout 区域 */
-.blocklyFlyout {
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  max-height: 100% !important;
+.injectionDiv {
+  overflow: hidden !important;
 }
 
-/* 确保工作区内容不会溢出 */
-.blocklyBlockCanvas {
-  overflow: visible !important;
-  max-width: none !important;
-}
-
-/* 防止工具箱导致的布局偏移 */
 .blocklyToolboxDiv {
-  flex-shrink: 0 !important;
-  width: auto !important;
-  min-width: unset !important;
-  max-width: unset !important;
+  overflow: hidden !important;
+}
+
+/* 工具箱内部分类列表 - 隐藏原生滚动条但允许滚动 */
+.blocklyToolboxContents {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.blocklyToolboxContents::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+}
+
+/* ===== 3. Flyout 区域 - 完全禁止原生滚动条 ===== */
+.blocklyFlyout {
+  overflow: hidden !important;
+}
+
+.blocklyFlyoutBackground {
+  overflow: hidden !important;
+}
+
+.blocklyFlyout > svg {
+  overflow: hidden !important;
+}
+
+/* ===== 4. 🚨 核心修复：强制隐藏 Flyout 的 SVG 滚动条 ===== */
+/* 这是问题的根源：blocklyFlyoutScrollbar 是 Blockly 渲染的 SVG 滚动条 */
+/* 当切换分类时，这个滚动条可能残留在界面上 */
+
+/* 方案：完全隐藏 Flyout 的 SVG 滚动条，让用户通过鼠标滚轮滚动 */
+.blocklyFlyoutScrollbar {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 同时隐藏 Flyout 内的所有滚动条元素 */
+.blocklyFlyout .blocklyScrollbarVertical,
+.blocklyFlyout .blocklyScrollbarHorizontal {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* ===== 5. 主工作区的 Blockly SVG 滚动条（保留，正常显示）===== */
+/* 注意：只保留主画布区域的滚动条，Flyout 的已被隐藏 */
+.blocklySvg > .blocklyScrollbarVertical:not(.blocklyFlyoutScrollbar),
+.blocklySvg > .blocklyScrollbarHorizontal:not(.blocklyFlyoutScrollbar) {
+  opacity: 0.5;
+  transition: opacity 0.2s ease !important;
+}
+
+.blocklySvg:hover > .blocklyScrollbarVertical:not(.blocklyFlyoutScrollbar),
+.blocklySvg:hover > .blocklyScrollbarHorizontal:not(.blocklyFlyoutScrollbar) {
+  opacity: 0.8;
+}
+
+/* ===== 6. Blockly SVG 滚动条基础样式 ===== */
+.blocklyScrollbarBackground {
+  fill: transparent !important;
+  stroke: none !important;
+}
+
+.blocklyScrollbarHandle {
+  fill: #cbd5e1 !important;
+  rx: 4 !important;
+  ry: 4 !important;
+  transition: fill 0.15s ease !important;
+}
+
+.blocklyScrollbarHandle:hover {
+  fill: #94a3b8 !important;
 }
