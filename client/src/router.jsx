@@ -6,6 +6,8 @@ import CourseDetail from './pages/CourseDetail';
 import LessonDetail from './pages/LessonDetail';
 import CanvasCoding from './pages/CanvasCoding';
 import ImageRecognition from './pages/ImageRecognition';
+import VoiceAssistant from './pages/VoiceAssistant';
+import Robot from './pages/Robot';
 import MyProjects from './pages/MyProjects';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
@@ -40,6 +42,14 @@ export const router = createBrowserRouter([
       {
         path: 'canvas/image-recognition',
         element: <ImageRecognition />,
+      },
+      {
+        path: 'canvas/voice-assistant',
+        element: <VoiceAssistant />,
+      },
+      {
+        path: 'canvas/robot',
+        element: <Robot />,
       },
       {
         path: 'my-projects',

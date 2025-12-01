@@ -6,7 +6,7 @@
 const CLAUDE_CONFIG = {
   // API 连接信息
   apiUrl: process.env.CLAUDE_API_URL || 'https://www.dmxapi.cn',
-  apiKey: process.env.CLAUDE_API_KEY || 'sk-sEmj6UesnFWP0baEkDP9QVs8obMsMTcjorXOWQqJaykWGFhP',
+  apiKey: process.env.CLAUDE_API_KEY || 'sk-W4loHVrtdlXqoJsHE61o6DIHiR1yTPYRftl1ApSqjO7q1bWY',
   model: process.env.CLAUDE_MODEL || 'claude-3-5-sonnet-20241022',
 
   // API 调用配置

@@ -402,6 +402,154 @@ javascriptGenerator.forBlock['text_join_simple'] = function(block, generator) {
   return [code, javascriptGenerator.ORDER_ADDITION];
 };
 
+// ===== 语音转文字积木 =====
+Blockly.Blocks['voice_speech_to_text'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🎤 语音转文字');
+    this.setOutput(true, 'String');
+    this.setColour(COLORS.AI);
+    this.setTooltip('将语音转换为文字');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['voice_speech_to_text'] = function(block, generator) {
+  const code = `await speechToText()`;
+  return [code, javascriptGenerator.ORDER_AWAIT];
+};
+
+// ===== 文字转语音积木 =====
+Blockly.Blocks['voice_text_to_speech'] = {
+  init: function() {
+    this.appendValueInput('TEXT')
+        .setCheck('String')
+        .appendField('🔊 文字转语音:');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.AI);
+    this.setTooltip('将文字转换为语音播放');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['voice_text_to_speech'] = function(block, generator) {
+  const text = generator.valueToCode(block, 'TEXT', javascriptGenerator.ORDER_ATOMIC) || '""';
+
+  const code = `await textToSpeech(${text});\n`;
+  return code;
+};
+
+// ===== 机器人向前移动积木 =====
+Blockly.Blocks['robot_move_forward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🤖 机器人向前移动');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.AI);
+    this.setTooltip('控制机器人向前移动');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['robot_move_forward'] = function(block, generator) {
+  const code = `robotMoveForward();\n`;
+  return code;
+};
+
+// ===== 机器人向后移动积木 =====
+Blockly.Blocks['robot_move_backward'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🤖 机器人向后移动');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.AI);
+    this.setTooltip('控制机器人向后移动');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['robot_move_backward'] = function(block, generator) {
+  const code = `robotMoveBackward();\n`;
+  return code;
+};
+
+// ===== 机器人左转积木 =====
+Blockly.Blocks['robot_turn_left'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🤖 机器人左转');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.AI);
+    this.setTooltip('控制机器人向左转');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['robot_turn_left'] = function(block, generator) {
+  const code = `robotTurnLeft();\n`;
+  return code;
+};
+
+// ===== 机器人右转积木 =====
+Blockly.Blocks['robot_turn_right'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🤖 机器人右转');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.AI);
+    this.setTooltip('控制机器人向右转');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['robot_turn_right'] = function(block, generator) {
+  const code = `robotTurnRight();\n`;
+  return code;
+};
+
+// ===== 机器人说话积木 =====
+Blockly.Blocks['robot_say'] = {
+  init: function() {
+    this.appendValueInput('TEXT')
+        .setCheck('String')
+        .appendField('🤖 机器人说:');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.AI);
+    this.setTooltip('让机器人说出指定文字');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['robot_say'] = function(block, generator) {
+  const text = generator.valueToCode(block, 'TEXT', javascriptGenerator.ORDER_ATOMIC) || '""';
+
+  const code = `robotSay(${text});\n`;
+  return code;
+};
+
+// ===== 机器人检测障碍物积木 =====
+Blockly.Blocks['robot_detect_obstacle'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🤖 检测障碍物');
+    this.setOutput(true, 'Boolean');
+    this.setColour(COLORS.AI);
+    this.setTooltip('检测前方是否有障碍物');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['robot_detect_obstacle'] = function(block, generator) {
+  const code = 'robotDetectObstacle()';
+  return [code, javascriptGenerator.ORDER_FUNCTION_CALL];
+};
+
 export default {
   // 导出所有自定义积木，确保它们被注册
   blocks: [
@@ -420,7 +568,17 @@ export default {
     'text_value',
     'number_value',
     'math_operation',
-    'text_join_simple'
+    'text_join_simple',
+    // 新增语音助手积木
+    'voice_speech_to_text',
+    'voice_text_to_speech',
+    // 新增机器人积木
+    'robot_move_forward',
+    'robot_move_backward',
+    'robot_turn_left',
+    'robot_turn_right',
+    'robot_say',
+    'robot_detect_obstacle'
   ]
 };
 

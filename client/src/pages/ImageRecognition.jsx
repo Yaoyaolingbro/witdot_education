@@ -452,7 +452,7 @@ export default function ImageRecognition() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* 左侧：Blockly 编辑器 */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-lg border overflow-hidden">
+            <div className="bg-white rounded-xl shadow-lg border overflow-hidden flex flex-col">
               <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-purple-50 border-b">
                 <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
                   <span className="text-2xl">🧩</span>
@@ -463,7 +463,8 @@ export default function ImageRecognition() {
                 </span>
               </div>
 
-              <div style={{ height: '600px' }}>
+              <div style={{ height: '600px' }} className="w-full flex relative">
+              <div className="flex-1 min-w-0 relative overflow-y-auto overflow-x-hidden">
                 <BlocklyEditor
                   initialBlocks={currentProject ? currentProject.blocksJson : JSON.stringify(defaultBlocks)}
                   toolbox={imageRecognitionToolbox}
@@ -471,6 +472,7 @@ export default function ImageRecognition() {
                   onCodeGenerate={setGeneratedCode}
                   readOnly={false}
                 />
+                </div>
               </div>
             </div>
           </div>

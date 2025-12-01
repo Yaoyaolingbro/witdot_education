@@ -1,0 +1,66 @@
+/**
+ * 🚨 防僵尸滚动条核心修复
+ * 专门解决 Flyout 撑开容器导致的僵尸滚动条问题
+ */
+
+/* 强制确保所有 Blockly 容器都不会产生浏览器原生滚动条 */
+.blockly-workspace,
+.blockly-workspace > div,
+.blockly-workspace > div > div,
+.blockly-workspace > div > div > div,
+.blockly-workspace > div > svg,
+.blocklyWorkspace,
+.blocklyMainBackground,
+.blocklyBlockCanvas,
+.blocklyFlyout,
+.blocklyToolboxDiv,
+.blocklyWidgetDiv {
+  overflow: hidden !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+/* 特别针对被 Flyout 撑开的父容器 */
+.blockly-workspace {
+  overflow: hidden !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
+}
+
+/* 确保即使内容溢出也不显示滚动条 */
+.blockly-workspace *::-webkit-scrollbar {
+  display: none !important; /* Chrome/Safari/Edge */
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* 防止任何子元素撑开容器 */
+.blockly-workspace * {
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* 特别处理 Flyout 区域 */
+.blocklyFlyout {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  max-height: 100% !important;
+}
+
+/* 确保工作区内容不会溢出 */
+.blocklyBlockCanvas {
+  overflow: visible !important;
+  max-width: none !important;
+}
+
+/* 防止工具箱导致的布局偏移 */
+.blocklyToolboxDiv {
+  flex-shrink: 0 !important;
+  width: auto !important;
+  min-width: unset !important;
+  max-width: unset !important;
+}

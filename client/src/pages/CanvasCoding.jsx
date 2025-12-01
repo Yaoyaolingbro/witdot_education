@@ -25,8 +25,8 @@ export default function CanvasCoding() {
       id: 'voice-assistant',
       title: '🎤 语音助手画板',
       description: '创建自己的语音对话助手',
-      badge: '即将推出',
-      badgeColor: 'bg-gray-100 text-gray-500',
+      badge: '新功能',
+      badgeColor: 'bg-green-100 text-green-700',
       path: '/canvas/voice-assistant',
       difficulty: '⭐⭐ 进阶',
       features: [
@@ -34,14 +34,14 @@ export default function CanvasCoding() {
         'AI 对话生成',
         '语音合成体验'
       ],
-      available: false
+      available: true
     },
     {
       id: 'robot',
       title: '🤖 机器人画板',
       description: '控制虚拟机器人移动和执行任务',
-      badge: '即将推出',
-      badgeColor: 'bg-gray-100 text-gray-500',
+      badge: '新功能',
+      badgeColor: 'bg-green-100 text-green-700',
       path: '/canvas/robot',
       difficulty: '⭐⭐⭐ 高级',
       features: [
@@ -49,7 +49,7 @@ export default function CanvasCoding() {
         '动画编程',
         '复杂任务设计'
       ],
-      available: false
+      available: true
     }
   ];
 

@@ -19,8 +19,9 @@
 /* 为不同类别的积木添加渐变色和阴影效果 */
 
 /* 所有积木块通用样式 - 增强阴影和 3D 效果 */
+/* 注意：只保留 filter 过渡，移除 transform 以避免干扰 Blockly 定位 */
 .blocklyPath {
-  transition: filter 0.2s ease, transform 0.2s ease;
+  transition: filter 0.2s ease;
 }
 
 /* AI 功能积木 - 紫色渐变 + 增强阴影 */
@@ -81,34 +82,23 @@
 }
 
 /* ===== 积木拖拽效果 ===== */
+/* 注意：禁用 transform 相关效果，因为 Blockly 使用内联 transform 定位积木 */
 .blocklyDraggable {
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              filter 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  /* 只保留 filter 过渡，移除 transform 过渡以避免干扰 Blockly 定位 */
+  transition: filter 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .blocklyDragging {
-  transform: scale(1.08) rotate(2deg);
+  /* 移除 transform，只保留阴影效果 */
   filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.2))
           drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15)) !important;
-  animation: float 0.3s ease-out;
 }
 
-@keyframes float {
-  0% {
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    transform: scale(1.1) rotate(1deg);
-  }
-  100% {
-    transform: scale(1.08) rotate(2deg);
-  }
-}
-
-/* ===== 积木悬停效果 - 增强版 ===== */
+/* ===== 积木悬停效果 - 安全版 ===== */
+/* 不使用 transform，只使用 filter 效果 */
 .blocklyBlockCanvas .blocklyDraggable:hover {
   cursor: grab;
-  transform: translateY(-2px);
+  /* 移除 transform: translateY(-2px)，避免覆盖 Blockly 内联定位 */
 }
 
 .blocklyBlockCanvas .blocklyDraggable:hover .blocklyPath {
@@ -119,7 +109,7 @@
 
 .blocklyBlockCanvas .blocklyDraggable:active {
   cursor: grabbing;
-  transform: scale(0.98);
+  /* 移除 transform: scale(0.98)，避免覆盖 Blockly 内联定位 */
 }
 
 /* 积木块发光效果（选中时）*/
@@ -229,12 +219,10 @@
 }
 
 /* ===== 垃圾桶美化 ===== */
-.blocklyTrash {
-  transition: transform 0.2s ease;
-}
-
+/* 注意：禁用 transform，因为 Blockly 使用内联 transform 定位垃圾桶 */
 .blocklyTrash:hover {
-  transform: scale(1.1);
+  /* 使用 filter 代替 transform 实现悬停效果，避免覆盖 Blockly 内联定位 */
+  filter: brightness(1.1) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
 }
 
 /* ===== 缩放控制按钮 ===== */
@@ -402,6 +390,8 @@
 }
 
 /* ===== 飞出区域积木块动画 ===== */
+/* 注意：禁用 transform 动画，因为会干扰 Blockly 的内联 transform 定位 */
+/* 只使用 opacity 淡入效果 */
 .blocklyFlyout .blocklyBlockCanvas > g {
   animation: fade-in-block 0.3s ease-out backwards;
 }
@@ -415,11 +405,11 @@
 @keyframes fade-in-block {
   from {
     opacity: 0;
-    transform: translateX(-20px);
+    /* 移除 transform: translateX(-20px)，避免干扰 Blockly 定位 */
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    /* 移除 transform: translateX(0) */
   }
 }
 
@@ -440,15 +430,13 @@
 }
 
 /* ===== 成功连接反馈动画 ===== */
+/* 注意：禁用 transform 动画，改用 filter 效果 */
 @keyframes connect-success {
-  0% {
-    transform: scale(1);
+  0%, 100% {
+    filter: brightness(1);
   }
   50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
+    filter: brightness(1.1);
   }
 }
 
