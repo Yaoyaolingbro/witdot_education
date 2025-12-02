@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Chat from './pages/Chat';
+import AiVisionHome from './pages/AiVisionHome';
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-projects',
         element: <MyProjects />,
+      },
+      {
+        path: 'ai-vision',
+        element: <AiVisionHome />,
       },
       {
         path: 'login',
