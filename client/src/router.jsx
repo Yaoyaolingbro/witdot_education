@@ -14,6 +14,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Chat from './pages/Chat';
 import AiVisionHome from './pages/AiVisionHome';
+import VisionRecognition from './pages/VisionRecognition';
+import VisionGeneration from './pages/VisionGeneration';
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ export const router = createBrowserRouter([
       {
         path: 'ai-vision',
         element: <AiVisionHome />,
+      },
+      {
+        path: 'ai-vision/image-lab',
+        element: <VisionRecognition />,
+      },
+      {
+        path: 'ai-vision/ai-art',
+        element: <VisionGeneration />,
       },
       {
         path: 'login',

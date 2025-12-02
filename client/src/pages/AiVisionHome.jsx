@@ -22,7 +22,7 @@ export default function AiVisionHome() {
         '场景与地标识别'
       ],
       gradient: 'from-blue-500 to-cyan-500',
-      available: false // TODO: 后端接口完成后改为 true
+      available: true
     },
     {
       id: 'ai-art',
@@ -40,7 +40,7 @@ export default function AiVisionHome() {
         '作品保存分享'
       ],
       gradient: 'from-purple-500 to-pink-500',
-      available: false // TODO: 后端接口完成后改为 true
+      available: true
     }
   ];
 

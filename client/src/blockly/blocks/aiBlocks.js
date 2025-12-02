@@ -550,6 +550,174 @@ javascriptGenerator.forBlock['robot_detect_obstacle'] = function(block, generato
   return [code, javascriptGenerator.ORDER_FUNCTION_CALL];
 };
 
+// ===== Vision 视觉工坊积木 =====
+
+// 摄像头拍照积木
+Blockly.Blocks['vision_camera_capture'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('📷 拍摄照片');
+    this.setOutput(true, 'String');
+    this.setColour(COLORS.AI);
+    this.setTooltip('使用摄像头拍摄一张照片');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['vision_camera_capture'] = function(block, generator) {
+  const code = 'await captureFromCamera()';
+  return [code, javascriptGenerator.ORDER_AWAIT];
+};
+
+// 识别物体积木
+Blockly.Blocks['vision_recognize_object'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('👁️ 识别物体');
+    this.appendValueInput('IMAGE')
+        .setCheck('String')
+        .appendField('图片:');
+    this.setOutput(true, 'String');
+    this.setColour(COLORS.AI);
+    this.setTooltip('识别图片中的物体');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['vision_recognize_object'] = function(block, generator) {
+  const image = generator.valueToCode(block, 'IMAGE', javascriptGenerator.ORDER_ATOMIC) || '""';
+  const code = `await visionRecognizeObject(${image})`;
+  return [code, javascriptGenerator.ORDER_AWAIT];
+};
+
+// 识别场景积木
+Blockly.Blocks['vision_recognize_scene'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🏞️ 识别场景');
+    this.appendValueInput('IMAGE')
+        .setCheck('String')
+        .appendField('图片:');
+    this.setOutput(true, 'String');
+    this.setColour(COLORS.AI);
+    this.setTooltip('识别图片所在的场景');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['vision_recognize_scene'] = function(block, generator) {
+  const image = generator.valueToCode(block, 'IMAGE', javascriptGenerator.ORDER_ATOMIC) || '""';
+  const code = `await visionRecognizeScene(${image})`;
+  return [code, javascriptGenerator.ORDER_AWAIT];
+};
+
+// 识别文字积木 (OCR)
+Blockly.Blocks['vision_recognize_text'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('📝 识别文字');
+    this.appendValueInput('IMAGE')
+        .setCheck('String')
+        .appendField('图片:');
+    this.setOutput(true, 'String');
+    this.setColour(COLORS.AI);
+    this.setTooltip('识别图片中的文字（OCR）');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['vision_recognize_text'] = function(block, generator) {
+  const image = generator.valueToCode(block, 'IMAGE', javascriptGenerator.ORDER_ATOMIC) || '""';
+  const code = `await visionRecognizeText(${image})`;
+  return [code, javascriptGenerator.ORDER_AWAIT];
+};
+
+// AI 生成图片积木
+Blockly.Blocks['vision_generate_image'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🎨 AI 生成图片');
+    this.appendValueInput('PROMPT')
+        .setCheck('String')
+        .appendField('描述:');
+    this.appendDummyInput()
+        .appendField('尺寸:')
+        .appendField(new Blockly.FieldDropdown([
+          ['512x512', '512x512'],
+          ['768x768', '768x768'],
+          ['1024x1024', '1024x1024']
+        ]), 'SIZE');
+    this.setOutput(true, 'String');
+    this.setColour(COLORS.AI);
+    this.setTooltip('根据文字描述生成图片');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['vision_generate_image'] = function(block, generator) {
+  const prompt = generator.valueToCode(block, 'PROMPT', javascriptGenerator.ORDER_ATOMIC) || '"可爱的小狗"';
+  const size = block.getFieldValue('SIZE');
+  const code = `await visionGenerateImage(${prompt}, '${size}')`;
+  return [code, javascriptGenerator.ORDER_AWAIT];
+};
+
+// 显示图片积木
+Blockly.Blocks['vision_display_image'] = {
+  init: function() {
+    this.appendValueInput('IMAGE')
+        .setCheck('String')
+        .appendField('🖼️ 显示图片:');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.IO);
+    this.setTooltip('在画廊中显示图片');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['vision_display_image'] = function(block, generator) {
+  const image = generator.valueToCode(block, 'IMAGE', javascriptGenerator.ORDER_ATOMIC) || '""';
+  const code = `displayImage(${image});\n`;
+  return code;
+};
+
+// 当识别到...时积木（条件判断）
+Blockly.Blocks['vision_when_detected'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('🔍 当识别到');
+    this.appendValueInput('TARGET')
+        .setCheck('String');
+    this.appendValueInput('IMAGE')
+        .setCheck('String')
+        .appendField('在图片');
+    this.appendStatementInput('DO')
+        .setCheck(null)
+        .appendField('时，执行:');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(COLORS.LOGIC);
+    this.setTooltip('当识别结果包含指定内容时执行');
+    this.setHelpUrl('');
+  }
+};
+
+javascriptGenerator.forBlock['vision_when_detected'] = function(block, generator) {
+  const target = generator.valueToCode(block, 'TARGET', javascriptGenerator.ORDER_ATOMIC) || '"苹果"';
+  const image = generator.valueToCode(block, 'IMAGE', javascriptGenerator.ORDER_ATOMIC) || '""';
+  const statements = generator.statementToCode(block, 'DO');
+
+  const code = `
+{
+  const result = await visionRecognizeObject(${image});
+  if (result && result.includes(${target})) {
+${statements}
+  }
+}
+`;
+  return code;
+};
+
 export default {
   // 导出所有自定义积木，确保它们被注册
   blocks: [
@@ -578,7 +746,15 @@ export default {
     'robot_turn_left',
     'robot_turn_right',
     'robot_say',
-    'robot_detect_obstacle'
+    'robot_detect_obstacle',
+    // 新增 Vision 视觉工坊积木
+    'vision_camera_capture',
+    'vision_recognize_object',
+    'vision_recognize_scene',
+    'vision_recognize_text',
+    'vision_generate_image',
+    'vision_display_image',
+    'vision_when_detected'
   ]
 };
 

@@ -55,6 +55,7 @@ app.use('/api/ai', require('./routes/ai'));  // AI 助教路由
 app.use('/api/records', require('./routes/records'));  // 学习记录路由
 app.use('/api/projects', require('./routes/projects'));  // 项目管理路由
 app.use('/api/conversations', require('./routes/conversations'));  // 对话历史路由
+app.use('/api/vision', require('./routes/vision'));  // AI 视觉工坊路由
 
 // 错误处理中间件
 app.use((err, req, res, next) => {
